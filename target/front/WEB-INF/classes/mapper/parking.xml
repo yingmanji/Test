@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.front.dao.parkingDao">
+    <select id="queryById" parameterType="long" resultMap="parkingMap">
+        SELECT parking_id,parking_name,parking_location,longitude,latitude,remaker FROM
+        parking
+        <where>
+            parking_id=#{parkingId}
+        </where>
+    </select>
+    <select id="queryBycondition" resultMap="parkingMap" parameterType="BigDecimal">
+      SELECT parking_id,parking_name,parking_location,longitude,latitude,remaker FROM
+        parking
+        <where>
+          <!--<if test="nowlongitude!=NULL and nowlatitude!=NULL">-->
+            (#{nowlongitude}+0.01>=longitude AND longitude>=#{nowlongitude}-0.01)AND
+            (#{nowlatitude}+0.01>=latitude AND latitude>=#{nowlatitude}-0.01)
+          <!--</if>-->
+        </where>
+    </select>
+    <resultMap id="parkingMap" type="com.front.entity.parking">
+        <id column="parking_id" jdbcType="BIGINT" property="parkingId"></id>
+        <result column="parking_name" jdbcType="VARCHAR" property="parkingName"/>
+        <result column="parking_location" jdbcType="VARCHAR" property="parkingLocation"/>
+        <result column="longitude" jdbcType="DECIMAL" property="longitude"/>
+        <result column="latitude" jdbcType="DECIMAL" property="latitude"/>
+        <result column="remaker" jdbcType="VARCHAR" property="remaker"/>
+    </resultMap>
+</mapper>

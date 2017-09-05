@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.front.dao.orderDao">
+    <select id="queryAll" resultMap="orderMap">
+        SELECT 	order_id,
+	user_id,
+	parkinglot_id,
+	parking_begin,
+	parking_end,
+	parking_totaltime,
+	price
+	FROM
+	orders
+    </select>
+    <insert id="insertOrder">
+INSERT INTO orders
+	(
+	user_id,
+	parkinglot_id,
+	parking_begin,
+	parking_end,
+	parking_totaltime,
+	price
+	)
+	VALUES
+	(
+	#{user_id},
+	#{parkinglot_id},
+	#{parking_begin},
+	#{parking_end},
+	#{parking_totaltime},
+	#{price}
+	);
+    </insert>
+    <resultMap id="orderMap" type="com.front.entity.order">
+        <id column="order_id" jdbcType="BIGINT" property="orderId"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="parkinglot_id" jdbcType="BIGINT" property="parkingLotId"/>
+        <result column="parking_begin" jdbcType="INTEGER" property="parkingBegin"/>
+        <result column="parking_end" jdbcType="INTEGER" property="parkingEnd"/>
+        <result column="parking_totaltime" jdbcType="INTEGER" property="parkingTotalTime"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+    </resultMap>
+</mapper>

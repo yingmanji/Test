@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.front.dao.generateDao">
+    <select id="queryAll" resultMap="generateMap">
+        SELECT 	generate_id,
+	parkinglot_id,
+	share_begin,
+	share_end,
+	price FROM generate
+    </select>
+    <insert id="insertGenerate">
+INSERT INTO generate
+	(parkinglot_id,share_begin,share_end,price)
+	VALUES
+	(#{parkinglot_id},
+	#{share_begin},
+	#{share_end},
+	#{price});
+    </insert>
+    <delete id="deleteGenerate">
+        DELETE FROM generate <where>generate_id=#{generate_id}</where>
+    </delete>
+    <resultMap id="generateMap" type="com.front.entity.generate">
+        <id column="generate_id" jdbcType="BIGINT" property="generateId"/>
+        <result column="parkinglot_id" jdbcType="BIGINT" property="parkingLotId"/>
+        <result column="share_begin" jdbcType="TIMESTAMP" property="shareBegin"/>
+        <result column="share_end" jdbcType="TIMESTAMP" property="shareEnd"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+    </resultMap>
+</mapper>
